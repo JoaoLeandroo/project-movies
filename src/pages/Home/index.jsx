@@ -7,6 +7,7 @@ import '../Home/home.css'
 export default function Home() {
 
     const [filmes, setFilmes] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function loadFilmes() {
@@ -27,19 +28,28 @@ export default function Home() {
         loadFilmes()
 
     }, [])
-    return(
-        <div className="container">
-            <div className="list-movies">
-                {filmes.map((filme) => {
-                    return(
-                        <article key={filme.id}>
-                            <strong>{filme.title}</strong>
-                            <img src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`} alt={filme.title} />
-                            <Link to={`/filme/${filme.id}`}>Acessar</Link>
-                        </article>
-                    )
-                })}
+
+
+    if(loading) {
+        return(
+            <span className="loader"></span>
+        )
+    }else{
+        return(
+            <div className="container">
+                <div className="list-movies">
+                    {filmes.map((filme) => {
+                        return(
+                            <article key={filme.id}>
+                                <strong>{filme.title}</strong>
+                                <img src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`} alt={filme.title} />
+                                <Link to={`/filme/${filme.id}`}>Acessar</Link>
+                            </article>
+                        )
+                    })}
+                </div>
             </div>
-        </div>
-    )
+        )
+
+    }
 }
