@@ -5,6 +5,10 @@
   font-family: sans-serif;
 }
 
+body {
+  background-color: #32035e;
+}
+
 .app {
   width: 100%;
 

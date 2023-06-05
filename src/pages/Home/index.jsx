@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import api from "../../services/api"
-
+import '../Home/home.css'
 // // URL da API: /movie/now_playing?api_key=da359e5e2f2da6874a02ea83beb3b3cf&language=pt-BR
 
 export default function Home() {
@@ -17,13 +18,28 @@ export default function Home() {
                 }
             })
 
-            console.log(response.data.results[4].title)
+            // se quiser trazer apenas uma certa quantidade de filmes é so utilizar o slice
+            // ex: setFilmes(response.data.results.slice(0, 10))
+            
+            setFilmes(response.data.results)
         }
 
         loadFilmes()
 
     }, [])
     return(
-        <h1>my home</h1>
+        <div className="container">
+            <div className="list-movies">
+                {filmes.map((filme) => {
+                    return(
+                        <article key={filme.id}>
+                            <strong>{filme.title}</strong>
+                            <img src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`} alt={filme.title} />
+                            <Link to={`/filme/${filme.id}`}>Acessar</Link>
+                        </article>
+                    )
+                })}
+            </div>
+        </div>
     )
 }
